@@ -1,25 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import {useTweets} from './tweets';
+const {TwitterTweetEmbed} = require('react-twitter-embed');
 
 function App() {
+  const getTweets = useTweets();  
+  const [tweetNum, setTweetNum] = useState(0);  
+  const tick = () => {
+    console.log('tick', tweetNum)
+    setTweetNum(tweetNum+1)
+  }
+
+  const friends = getTweets("friends");  
+  
+
+  const getTweetId = (tweetNum: number) => {
+    if (tweetNum < 0) {
+      tweetNum = 0;
+    }
+
+    tweetNum = tweetNum % friends.length;
+    
+
+    return friends[tweetNum] && (friends[tweetNum] as any).id_str 
+  }
+
+  useEffect(() => {    
+    const interval = setInterval(tick, 5000)
+    return () => {
+      clearInterval(interval);
+    }
+  })
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      {[0, 1, 2].map(delta => {
+        const tweetId = getTweetId(tweetNum + delta);        
+        return <TwitterTweetEmbed key={tweetId} tweetId={tweetId} />;
+      })}
     </div>
+
   );
 }
 
