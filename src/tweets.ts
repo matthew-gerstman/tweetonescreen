@@ -12,14 +12,14 @@ async function fetchTweets(list: List) {
   );
 }
 
-const previousTweetsString = null; // localStorage.getItem("tweets");
+const previousTweetsString = localStorage.getItem("tweets");
 const previousTweets = previousTweetsString && JSON.parse(previousTweetsString);
 const DEFAULT_TWEETS = {
   jokes: [],
   friends: [],
 };
 export const useTweets = () => {
-  const [tweets, setTweets] = useState(DEFAULT_TWEETS);
+  const [tweets, setTweets] = useState(previousTweets || DEFAULT_TWEETS);
 
   const updateTweets = (key: List, apiTweets: Tweet[]) => {
     const newTweets = {
