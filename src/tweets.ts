@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
-import { REFRESH_RATE } from "./config";
+import { API_URL, REFRESH_RATE } from "./config";
 
 type List = "jokes" | "friends";
 type Tweet = any;
 async function fetchTweets(list: List) {
-  return fetch(`http://localhost:9000/twitter?list=${list}`).then(
-    async (response) => {
-      const tweets = await response.json();
-      return Object.values(tweets.tweets);
-    }
-  );
+  return fetch(`${API_URL}/twitter?list=${list}`).then(async (response) => {
+    const tweets = await response.json();
+    return Object.values(tweets.tweets);
+  });
 }
 
 const previousTweetsString = localStorage.getItem("tweets");
