@@ -1,2 +1,4 @@
 [build]
   Functions = "lambda"
+  # Clear CI eng
+  command = "CI= npm run build"
