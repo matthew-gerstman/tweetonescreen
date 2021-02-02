@@ -1,19 +1,45 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import {useTweets} from './tweets';
+import {List,useTweets} from './tweets';
 const {TwitterTweetEmbed} = require('react-twitter-embed');
 
+function getList(): List | undefined {
+  const urlParams = new URLSearchParams(window.location.search);
+const friends = urlParams.get('friends');
+console.log({friends})
+if (friends || friends === "") {
+  return 'friends';
+}
+const jokes = urlParams.get('jokes');
+if (jokes|| jokes === "") {
+  return 'jokes';
+}
+
+return undefined;
+}
+
 function App() {
-  const getTweets = useTweets();  
-  const [tweetNum, setTweetNum] = useState(0);  
-  const tick = () => {
-    console.log('tick', tweetNum)
-    setTweetNum(tweetNum+1)
+
+  const key = getList();
+  if (!key) {
+    throw new Error("No query param")
   }
 
-  const friends = getTweets("friends");  
+  const {getTweets, getLastPoll} = useTweets(key); 
+  const [tweetNum, setTweetNum] = useState(0);  
+  const tick = () => {    
+    setTweetNum(tweetNum+1)
+  }
   
-
+  const lastPoll = getLastPoll();
+  
+  useEffect(() => {
+    console.log({lastPoll})
+    setTweetNum(0);
+  }, [lastPoll])
+  
+  
+  const friends = getTweets();  
   const getTweetId = (tweetNum: number) => {
     if (tweetNum < 0) {
       tweetNum = 0;

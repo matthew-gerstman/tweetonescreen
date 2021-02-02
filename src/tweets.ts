@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { API_URL, REFRESH_RATE } from "./config";
 
-type List = "jokes" | "friends";
+export type List = "jokes" | "friends";
 type Tweet = any;
 async function fetchTweets(list: List) {
   return fetch(`${API_URL}/twitter?list=${list}`).then(async (response) => {
@@ -16,10 +16,10 @@ const DEFAULT_TWEETS = {
   jokes: [],
   friends: [],
 };
-export const useTweets = () => {
+export const useTweets = (key: List) => {
   const [tweets, setTweets] = useState(previousTweets || DEFAULT_TWEETS);
 
-  const updateTweets = (key: List, apiTweets: Tweet[]) => {
+  const updateTweets = (apiTweets: Tweet[]) => {
     const newTweets = {
       ...tweets,
       [key]: [...apiTweets],
@@ -28,22 +28,22 @@ export const useTweets = () => {
     localStorage.setItem("tweets", JSON.stringify(newTweets));
   };
 
+  const lastPoll = useRef(new Date());
   useEffect(() => {
-    fetchTweets("jokes").then((response) => updateTweets("jokes", response));
-    fetchTweets("friends").then((response) =>
-      updateTweets("friends", response)
-    );
+    fetchTweets(key).then((response) => updateTweets(response));
 
     setInterval(() => {
-      fetchTweets("jokes").then((response) => updateTweets("jokes", response));
-      fetchTweets("friends").then((response) =>
-        updateTweets("friends", response)
-      );
+      lastPoll.current = new Date();
+      fetchTweets(key).then((response) => updateTweets(response));
     }, REFRESH_RATE);
   }, []);
 
-  console.log({ tweets });
-  return (list: List) => {
-    return tweets[list] || [];
+  return {
+    getLastPoll: () => {
+      return lastPoll.current;
+    },
+    getTweets: () => {
+      return tweets[key] || [];
+    },
   };
 };
