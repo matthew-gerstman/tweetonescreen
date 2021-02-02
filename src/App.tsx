@@ -3,27 +3,19 @@ import './App.css';
 import {List,useTweets} from './tweets';
 const {TwitterTweetEmbed} = require('react-twitter-embed');
 
-function getList(): List | undefined {
+function getList(): List {
   const urlParams = new URLSearchParams(window.location.search);
-const friends = urlParams.get('friends');
-console.log({friends})
-if (friends || friends === "") {
-  return 'friends';
-}
-const jokes = urlParams.get('jokes');
-if (jokes|| jokes === "") {
-  return 'jokes';
-}
+  const jokes = urlParams.get('jokes');
+  if (jokes|| jokes === "") {
+    return 'jokes';
+  }
 
-return undefined;
+  return 'friends';
 }
 
 function App() {
 
   const key = getList();
-  if (!key) {
-    throw new Error("No query param")
-  }
 
   const {getTweets, getLastPoll} = useTweets(key); 
   const [tweetNum, setTweetNum] = useState(0);  
