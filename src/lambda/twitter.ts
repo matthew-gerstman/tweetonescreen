@@ -34,18 +34,14 @@ const lists: Lists = {
   },
 };
 
-const knownLists = Object.keys(lists) as KnownList[];
-
 export async function fetchTweetsForList(list: string) {
   try {
-    const tweets = await client.get(`lists/statuses.json?limit=10`, {
+    const tweets = await client.get(`lists/statuses.json`, {
       ...(lists[list] || {}),
+      count: 500,
+      include_rts: false,
     });
-    if (list === "jokes") {
-      return tweets;
-    } else {
-      return tweets.filter((tweet: any) => tweet.retweeted_status == null);
-    }
+    return tweets;
   } catch (e) {
     console.error({ e });
   }
