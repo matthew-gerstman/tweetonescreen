@@ -65,7 +65,6 @@ function App() {
   return (
     <div className="app center" style={BACKGROUND && {background: BACKGROUND}}>
       <Tweet
-        key={currentTweetId}
         tweetId={currentTweetId}
         setTweetReady={() => setTweetReady(currentTweetId)}
       />
