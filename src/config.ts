@@ -18,8 +18,4 @@ export const TWEET_OPTIONS = {
 export const BACKGROUND =
   process.env.NODE_ENV !== "production" ? "black" : undefined;
 
-const REFRESH_WINDOW = IS_PROD;
-
-if (REFRESH_WINDOW) {
-  setTimeout(() => location.reload(), 1000);
-}
+setTimeout(() => location.reload(), 1000);
