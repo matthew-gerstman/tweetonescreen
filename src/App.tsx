@@ -60,11 +60,13 @@ function App() {
       clearInterval(interval);
     };
   });
+  console.log({tweetNum});
   const currentTweetId = getTweetId(tweetNum);
 
   return (
     <div className="app center" style={BACKGROUND && {background: BACKGROUND}}>
       <Tweet
+        key={`current-${currentTweetId}`}
         tweetId={currentTweetId}
         setTweetReady={() => setTweetReady(currentTweetId)}
       />

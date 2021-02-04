@@ -54,6 +54,10 @@ export const Tweet: React.FunctionComponent<Props> = ({
       return;
     }
 
+    if (tweetWrapper.current.innerHTML) {
+      return;
+    }
+
     if (!isLoading) {
       return;
     }
