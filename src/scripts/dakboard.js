@@ -114,6 +114,28 @@ let tweetsTop = 650;
       });
     })
 })
+
+fetch("https://dakboard.com/screens/blockResizeMove", {
+        "headers": {
+          "accept": "application/json, text/javascript, */*; q=0.01",
+          "accept-language": "en-US,en;q=0.9",
+          "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+          "sec-ch-ua": "\"Google Chrome\";v=\"87\", \" Not;A Brand\";v=\"99\", \"Chromium\";v=\"87\"",
+          "sec-ch-ua-mobile": "?0",
+          "sec-fetch-dest": "empty",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-site": "same-origin",
+          "x-requested-with": "XMLHttpRequest"
+        },
+        "referrer": "https://dakboard.com/screens/edit/id/194213",
+        "referrerPolicy": "strict-origin-when-cross-origin",
+        "body": `id=601c82c4f62f59338b7a5083&w=${fuzzyTweetWidth*2}px&h=${tweetHeight}px&x=${x}&y=${tweetsTop}&screen_id=194213`,
+        "method": "POST",
+        "mode": "cors",
+        "credentials": "include"
+      });  
+
+
 // Weather
 fetch("https://dakboard.com/screens/blockResizeMove", {
   "headers": {

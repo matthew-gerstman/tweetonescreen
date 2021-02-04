@@ -64,7 +64,7 @@ function App() {
   const currentTweetId = getTweetId(tweetNum);
 
   return (
-    <div className="app center" style={BACKGROUND && {background: BACKGROUND}}>
+    <div className="app" style={BACKGROUND && {background: BACKGROUND}}>
       <Tweet
         key={`current-${currentTweetId}`}
         tweetId={currentTweetId}
