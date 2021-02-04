@@ -62,14 +62,10 @@ function App() {
   });
   console.log({tweetNum});
   const currentTweetId = getTweetId(tweetNum);
+  const nextTweetId = getTweetId(tweetNum + 1);
 
   return (
-    <div className="app" style={BACKGROUND && {background: BACKGROUND}}>
-      <Tweet
-        key={`current-${currentTweetId}`}
-        tweetId={currentTweetId}
-        setTweetReady={() => setTweetReady(currentTweetId)}
-      />
+    <div className="app center" style={BACKGROUND && {background: BACKGROUND}}>
       {[...new Array(5)].map((_, delta) => {
         const tweetNumDelta = tweetNum + delta;
         if (tweetNumDelta < 0) {
@@ -77,9 +73,11 @@ function App() {
         }
         const tweetId = getTweetId(tweetNumDelta);
         return (
-          <div className="hidden-tweet" key={tweetId}>
+          <div
+            className={classNames({"hidden-tweet": !isTweetReady(tweetId)})}
+            key={tweetId}
+          >
             <Tweet
-              key={tweetId}
               tweetId={tweetId}
               setTweetReady={() => setTweetReady(tweetId)}
             />

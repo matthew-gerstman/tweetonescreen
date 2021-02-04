@@ -8,7 +8,7 @@ export const TICK_RATE = 1000 * 10;
 const urlParams = new URLSearchParams(window.location.search);
 
 const urlWidth = urlParams.get("width");
-const width = (urlWidth && parseInt(urlWidth, 10)) || 500;
+const width = (urlWidth && parseInt(urlWidth, 10)) || 475;
 export const TWEET_OPTIONS = {
   // https://developer.twitter.com/en/docs/twitter-for-websites/embedded-tweets/guides/embedded-tweet-parameter-reference
   width,
