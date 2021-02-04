@@ -10,7 +10,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const urlWidth = urlParams.get("width");
 export const TWEET_OPTIONS = {
   // https://developer.twitter.com/en/docs/twitter-for-websites/embedded-tweets/guides/embedded-tweet-parameter-reference
-  width: 500,
+  width: 400,
   theme: "dark",
   // align: 'center', // right | center | left
   // conversation, // none
@@ -18,4 +18,7 @@ export const TWEET_OPTIONS = {
 export const BACKGROUND =
   process.env.NODE_ENV !== "production" ? "black" : undefined;
 
-setTimeout(() => window.location.reload(), 5000);
+const REFRESH_WINDOW = IS_PROD;
+if (REFRESH_WINDOW) {
+  setTimeout(() => window.location.reload(), 5000);
+}
