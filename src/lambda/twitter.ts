@@ -1,5 +1,5 @@
 require("@babel/polyfill/noConflict");
-import { Handler, Context, Callback, APIGatewayEvent } from "aws-lambda";
+import {Handler, Context, Callback, APIGatewayEvent} from "aws-lambda";
 import Twitter from "twitter";
 
 const CONSUMER_KEY = "SO2dX07BmPjvLCLXoIiMHfcSZ";
@@ -16,53 +16,68 @@ const client = new Twitter({
 type List = {
   owner_screen_name: string;
   slug: string;
+  include_rts?: boolean;
 };
 
-type KnownList = "friends" | "jokes";
+const KnownList = ["jokes", "friends", "rtfriends"];
+export type KnownList = "jokes" | "friends" | "rtfriends";
 type Lists = {
-  [key: string]: List;
+  [key in KnownList]: List;
 };
 
+const friends = {
+  owner_screen_name: "MatthewGerstman",
+  slug: "friends-15058",
+};
 const lists: Lists = {
-  friends: {
-    owner_screen_name: "MatthewGerstman",
-    slug: "friends-15058",
-  },
+  friends,
   jokes: {
     owner_screen_name: "MatthewGerstman",
     slug: "jokes-85882",
   },
+  rtfriends: {
+    ...friends,
+    include_rts: true,
+  },
 };
 
-export async function fetchTweetsForList(list: string) {
+export async function fetchTweetsForList(list: KnownList) {
   try {
     const tweets = await client.get(`lists/statuses.json`, {
-      ...(lists[list] || {}),
       count: 500,
       include_rts: false,
+      ...(lists[list] || {}),
     });
     return tweets;
   } catch (e) {
-    console.error({ e });
+    console.error({e});
   }
+}
+
+function isKnownList(list: string): list is KnownList {
+  return KnownList.includes(list);
 }
 
 export const handler: Handler = (
   event: APIGatewayEvent,
   context: Context,
-  callback: Callback
+  callback: Callback,
 ) => {
   const list = event.queryStringParameters && event.queryStringParameters.list;
   if (!list) {
-    return callback(null, { statusCode: 400, body: "No list" });
+    return callback(null, {statusCode: 400, body: "No list"});
+  }
+
+  if (!isKnownList(list)) {
+    return callback(null, {statusCode: 400, body: "Invalid list"});
   }
 
   fetchTweetsForList(list)
     .then((tweets) => {
       callback(null, {
         statusCode: 200,
-        body: JSON.stringify({ tweets }),
-        headers: { "Access-Control-Allow-Origin": "*" },
+        body: JSON.stringify({tweets}),
+        headers: {"Access-Control-Allow-Origin": "*"},
       });
     })
     .catch((e) => {

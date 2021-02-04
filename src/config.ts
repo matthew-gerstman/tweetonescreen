@@ -6,8 +6,10 @@ export const REFRESH_RATE = 1000 * 3600 * 10;
 export const TICK_RATE = 1000 * 10;
 export const TWEET_OPTIONS = {
   // https://developer.twitter.com/en/docs/twitter-for-websites/embedded-tweets/guides/embedded-tweet-parameter-reference
-  width: 500,
+  width: 100,
   theme: "dark",
   // align: 'center', // right | center | left
   // conversation, // none
 };
+export const BACKGROUND =
+  process.env.NODE_ENV !== "production" ? "black" : undefined;

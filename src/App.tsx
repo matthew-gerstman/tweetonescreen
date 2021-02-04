@@ -1,14 +1,20 @@
 import {useEffect, useState} from "react";
 import "./App.css";
-import {TICK_RATE} from "./config";
+import {BACKGROUND, TICK_RATE} from "./config";
 import {List, useTweets} from "./tweets";
 import {Tweet} from "./components/tweet";
 
 function getList(): List {
   const urlParams = new URLSearchParams(window.location.search);
+
   const jokes = urlParams.get("jokes");
   if (jokes || jokes === "") {
     return "jokes";
+  }
+
+  const rtfriends = urlParams.get("rtfriends");
+  if (rtfriends || rtfriends === "") {
+    return "rtfriends";
   }
 
   return "friends";
@@ -49,7 +55,7 @@ function App() {
   });
 
   return (
-    <div className="app">
+    <div className="app" style={BACKGROUND && {background: BACKGROUND}}>
       {[0, 1, 2].map((delta) => {
         const tweetId = getTweetId(tweetNum + delta);
         return <Tweet key={tweetId} tweetId={tweetId} />;

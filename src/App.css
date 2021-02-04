@@ -1,8 +1,13 @@
+::-webkit-scrollbar {
+  display: none;
+}
+
 body {
-  background-color: black;
+  background-color: transparent;
 }
 
 .app {
+  height: 100vh;
   background-color: transparent;
   display: flex;
   justify-content: center;

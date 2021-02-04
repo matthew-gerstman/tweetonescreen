@@ -1,7 +1,9 @@
 import {useEffect, useRef, useState} from "react";
 import {API_URL, REFRESH_RATE} from "./config";
+import {KnownList} from "./lambda/twitter";
 
-export type List = "jokes" | "friends";
+export type List = KnownList;
+
 type Tweet = any;
 async function fetchTweets(list: List) {
   return fetch(`${API_URL}/twitter?list=${list}`).then(async (response) => {
@@ -15,6 +17,7 @@ const previousTweets = previousTweetsString && JSON.parse(previousTweetsString);
 const DEFAULT_TWEETS = {
   jokes: [],
   friends: [],
+  rtfriends: [],
 };
 export const useTweets = (key: List) => {
   const [tweets, setTweets] = useState(previousTweets || DEFAULT_TWEETS);
