@@ -20,7 +20,7 @@ function App() {
   const {getTweets, getLastPoll} = useTweets(key);
   const [tweetNum, setTweetNum] = useState(0);
   const tick = () => {
-    // setTweetNum(tweetNum + 1);
+    setTweetNum(tweetNum + 1);
   };
 
   const lastPoll = getLastPoll();
