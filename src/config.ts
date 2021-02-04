@@ -3,3 +3,11 @@ export const API_URL = IS_PROD
   ? "https://twitter.slytherin.dev/.netlify/functions"
   : "http://localhost:9000";
 export const REFRESH_RATE = 1000 * 3600 * 10;
+export const TICK_RATE = 1000 * 10;
+export const TWEET_OPTIONS = {
+  // https://developer.twitter.com/en/docs/twitter-for-websites/embedded-tweets/guides/embedded-tweet-parameter-reference
+  width: 500,
+  theme: "dark",
+  // align: 'center', // right | center | left
+  // conversation, // none
+};

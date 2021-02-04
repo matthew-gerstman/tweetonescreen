@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { API_URL, REFRESH_RATE } from "./config";
+import {useEffect, useRef, useState} from "react";
+import {API_URL, REFRESH_RATE} from "./config";
 
 export type List = "jokes" | "friends";
 type Tweet = any;

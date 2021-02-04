@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import "./App.css";
-import { List, useTweets } from "./tweets";
-const { TwitterTweetEmbed } = require("react-twitter-embed");
+import {TICK_RATE} from "./config";
+import {List, useTweets} from "./tweets";
+import {Tweet} from "./components/tweet";
 
 function getList(): List {
   const urlParams = new URLSearchParams(window.location.search);
@@ -16,16 +17,16 @@ function getList(): List {
 function App() {
   const key = getList();
 
-  const { getTweets, getLastPoll } = useTweets(key);
+  const {getTweets, getLastPoll} = useTweets(key);
   const [tweetNum, setTweetNum] = useState(0);
   const tick = () => {
-    setTweetNum(tweetNum + 1);
+    // setTweetNum(tweetNum + 1);
   };
 
   const lastPoll = getLastPoll();
 
   useEffect(() => {
-    console.log({ lastPoll });
+    console.log({lastPoll});
     setTweetNum(0);
   }, [lastPoll]);
 
@@ -41,7 +42,7 @@ function App() {
   };
 
   useEffect(() => {
-    const interval = setInterval(tick, 5000);
+    const interval = setInterval(tick, TICK_RATE);
     return () => {
       clearInterval(interval);
     };
@@ -51,7 +52,7 @@ function App() {
     <div className="app">
       {[0, 1, 2].map((delta) => {
         const tweetId = getTweetId(tweetNum + delta);
-        return <TwitterTweetEmbed key={tweetId} tweetId={tweetId} />;
+        return <Tweet key={tweetId} tweetId={tweetId} />;
       })}
     </div>
   );

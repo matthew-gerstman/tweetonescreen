@@ -1,5 +1,5 @@
 body {
-  background-color: transparent;
+  background-color: black;
 }
 
 .app {
@@ -10,7 +10,6 @@ body {
   flex-direction: column;
 }
 
-.app iframe {
-  background-color: transparent;
-  width: 500px !important;
+.tweet-wrapper {
+  width: 550px;
 }

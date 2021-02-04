@@ -1,0 +1,9 @@
+{
+    "semi": true,
+    "trailingComma": "all",
+    "singleQuote": false,
+    "printWidth": 80,
+    "files": ["*.ts", "*.tsx", "*.css", "*.js", "*.json", ".prettierrc"],
+    "quoteProps": "as-needed",
+    "bracketSpacing": false
+}
