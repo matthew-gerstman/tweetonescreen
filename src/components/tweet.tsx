@@ -16,6 +16,7 @@ type Props = {
    * Placeholder while tweet is loading
    */
   placeholder?: string | (() => JSX.Element);
+  setTweetReady: () => void;
 };
 
 declare global {
@@ -26,7 +27,11 @@ declare global {
 
 type Twttr = {
   widgets: {
-    createTweet(tweetId: number, ref: HTMLDivElement, options: Options): void;
+    createTweet(
+      tweetId: number,
+      ref: HTMLDivElement,
+      options: Options,
+    ): Promise<void>;
   };
 };
 
@@ -34,6 +39,7 @@ export const Tweet: React.FunctionComponent<Props> = ({
   tweetId,
   placeholder,
   options,
+  setTweetReady,
 }) => {
   const [isLoading, setLoading] = useState(true);
   const tweetWrapper = useRef<HTMLDivElement>(null);
@@ -47,9 +53,19 @@ export const Tweet: React.FunctionComponent<Props> = ({
     if (!tweetWrapper || !tweetWrapper.current) {
       return;
     }
-    window.twttr.widgets.createTweet(tweetId, tweetWrapper.current, allOptions);
-    setLoading(false);
-  }, [window.twttr]);
+
+    if (!isLoading) {
+      return;
+    }
+
+    window.twttr.widgets
+      .createTweet(tweetId, tweetWrapper.current, allOptions)
+      .then(() => {
+        console.log("finished loading", tweetId);
+        setLoading(false);
+        setTweetReady();
+      });
+  }, [window.twttr, tweetWrapper.current]);
 
   return (
     <>
