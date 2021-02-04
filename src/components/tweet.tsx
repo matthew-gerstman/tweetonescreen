@@ -47,7 +47,6 @@ export const Tweet: React.FunctionComponent<Props> = ({
     if (!tweetWrapper || !tweetWrapper.current) {
       return;
     }
-
     window.twttr.widgets.createTweet(tweetId, tweetWrapper.current, allOptions);
     setLoading(false);
   }, [window.twttr]);
@@ -55,7 +54,11 @@ export const Tweet: React.FunctionComponent<Props> = ({
   return (
     <>
       {isLoading && placeholder}
-      <div className="tweet-wrapper" ref={tweetWrapper} />
+      <div
+        className="tweet-wrapper"
+        style={{width: allOptions.width}}
+        ref={tweetWrapper}
+      />
     </>
   );
 };
