@@ -21,5 +21,5 @@ export const BACKGROUND =
 const REFRESH_WINDOW = IS_PROD;
 
 if (REFRESH_WINDOW) {
-  setTimeout(() => location.reload(), 10000);
+  setTimeout(() => location.reload(), 1000);
 }
