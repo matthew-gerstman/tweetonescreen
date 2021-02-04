@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import classNames from "classnames";
 import "./App.css";
 import {BACKGROUND, TICK_RATE} from "./config";
 import {List, useTweets} from "./tweets";
@@ -55,10 +56,23 @@ function App() {
   });
 
   return (
-    <div className="app" style={BACKGROUND && {background: BACKGROUND}}>
-      {[0, 1, 2].map((delta) => {
-        const tweetId = getTweetId(tweetNum + delta);
-        return <Tweet key={tweetId} tweetId={tweetId} />;
+    <div className="app center" style={BACKGROUND && {background: BACKGROUND}}>
+      {[-1, 0, 1, 2].map((delta) => {
+        const tweetNumDelta = tweetNum + delta;
+        if (tweetNumDelta < 0) {
+          return;
+        }
+        const tweetId = getTweetId(tweetNumDelta);
+
+        return (
+          <div
+            className={classNames({
+              "hidden-tweet": delta !== 0,
+            })}
+          >
+            <Tweet key={tweetId} tweetId={tweetId} />
+          </div>
+        );
       })}
     </div>
   );

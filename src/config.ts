@@ -10,7 +10,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const urlWidth = urlParams.get("width");
 export const TWEET_OPTIONS = {
   // https://developer.twitter.com/en/docs/twitter-for-websites/embedded-tweets/guides/embedded-tweet-parameter-reference
-  width: 400,
+  width: urlWidth || 500,
   theme: "dark",
   // align: 'center', // right | center | left
   // conversation, // none

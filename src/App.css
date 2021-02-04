@@ -9,9 +9,18 @@ body {
 .app {
   height: 100vh;
   background-color: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: flex;      
   flex-direction: column;
 }
 
+.center {
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.hidden-tweet {
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
