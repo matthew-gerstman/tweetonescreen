@@ -23,7 +23,12 @@ const getLocalStorageTweets = (key: KnownList): Tweet[] => {
   if (preloadedVal !== undefined) {
     return preloadedVal;
   }
-  const previousTweetsString = localStorage.getItem(getLocalStorageKey(key));
+  let previousTweetsString;
+  try {
+    previousTweetsString = localStorage.getItem(getLocalStorageKey(key));
+  } catch (e) {
+    // Incognito mode fails.
+  }
   const previousTweets =
     previousTweetsString && JSON.parse(previousTweetsString);
 
